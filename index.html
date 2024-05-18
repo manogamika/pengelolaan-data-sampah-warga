@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pengelolaan dan Penghitungan Data Sampah</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.output {
+    margin-top: 20px;
+}
+
+.output p {
+    margin: 10px 0;
+    color: #333;
+}
+
+.warning {
+    color: #ff0000; 
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Pengelolaan dan Penghitungan Data Sampah</h2>
+    
+    <label for="jumlah_rt">Jumlah RT di RW:</label>
+    <input type="number" id="jumlah_rt">
+    
+    <div id="output" class="output"></div>
+    
+    <button onclick="hitungSampah()">Hitung Sampah</button>
+</div>
+
+<script>
+function hitungSampah() {
+    var jumlah_rt = parseInt(document.getElementById("jumlah_rt").value);
+    var sampah_rt = [];
+    var total_sampah = 0;
+    var rata_rata_sampah = 0;
+    var kategori_sampah = "";
+
+    for (var i = 0; i < jumlah_rt; i++) {
+        var sampah = parseFloat(prompt("Masukkan jumlah sampah dari RT " + (i + 1) + " (kg):"));
+        sampah_rt.push(sampah);
+        total_sampah += sampah;
+    }
+
+    rata_rata_sampah = total_sampah / jumlah_rt;
+
+    if (rata_rata_sampah < 5) {
+        kategori_sampah = "sedikit";
+    } else if (rata_rata_sampah >= 5 && rata_rata_sampah < 15) {
+        kategori_sampah = "sedang";
+    } else if (rata_rata_sampah >= 15 && rata_rata_sampah < 30) {
+        kategori_sampah = "banyak";
+    } else {
+        kategori_sampah = "banyak sekali";
+    }
+
+    var output = "<p>Total Sampah: " + total_sampah.toFixed(2) + " kg</p>";
+    output += "<p>Rata-rata Sampah: " + rata_rata_sampah.toFixed(2) + " kg</p>";
+
+    if (kategori_sampah === "banyak" || kategori_sampah === "banyak sekali") {
+        alert("Peringatan: Rata-rata sampah melebihi ketentuan!");
+    }
+
+    output += "<p>Kategori Sampah: " + kategori_sampah + "</p>";
+
+    document.getElementById("output").innerHTML = output;
+}
+</script>
+
+</body>
+</html>
